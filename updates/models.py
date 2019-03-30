@@ -22,7 +22,7 @@ class UpdateQuerySet(models.QuerySet):
     #     return final_array
 
     def serialize(self):
-        list_values = list(self.values("user", "content", "image"))
+        list_values = list(self.values("user", "content", "image", "id"))
         return json.dumps(list_values)
 
 
@@ -52,6 +52,7 @@ class Update(models.Model):
         image = self.image.url if self.image and hasattr(self.image, 'url') else ""
 
         data = {
+            "id": self.id,
             "content": self.content,
             "user": self.user_id,
             "image": image
