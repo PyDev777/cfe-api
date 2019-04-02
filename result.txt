@@ -1,0 +1,93 @@
+-------------------------------------------------------------------------------------------------------
+/home/dev/Proj/restapi/bin/python3.5 /home/dev/Proj/restapi/src/cfeapi/manage.py runserver 0.0.0.0:8000
+-------------------------------------------------------------------------------------------------------
+
+-> MODELS.PY
+    ->[QuerySet]<-[QuerySet]
+    ->[Manager]<-[Manager]
+    ->[Model]<-[Model]
+<- MODELS.PY
+
+-> MODELS.PY
+    ->[QuerySet]<-[QuerySet]
+    ->[Manager]<-[Manager]
+    ->[Model]<-[Model]
+<- MODELS.PY
+
+-> VIEWS.PY
+    ->[SerializedDetailView]<-[SerializedDetailView]
+    ->[SerializedListView]<-[SerializedListView]
+<- VIEWS.PY
+
+---------------------------------------------------------------------
+Starting development server at http://0.0.0.0:8000/
+[02/Apr/2019 16:11:32] "GET /json/serialized/detail/ HTTP/1.1" 200 47
+---------------------------------------------------------------------
+
+->[SerializedDetailView].get
+
+    [SerializedDetailView].get BEFORE obj = Update.objects.get(id=1)
+        ->[Manager].get_queryset()<-[Manager].get_queryset()
+    [SerializedDetailView].get AFTER obj = Update.objects.get(id=1)
+
+    [SerializedDetailView].get BEFORE json_data = obj.serialize()
+        -> [Model].serialize()<- [Model].serialize()
+    [SerializedDetailView].get AFTER json_data = obj.serialize()
+
+<-[SerializedDetailView].get
+
+
+
+
+-------------------------------------------------------------------------------------------------------
+/home/dev/Proj/restapi/bin/python3.5 /home/dev/Proj/restapi/src/cfeapi/manage.py runserver 0.0.0.0:8000
+-------------------------------------------------------------------------------------------------------
+
+-> MODELS.PY
+    ->[QuerySet]<-[QuerySet]
+    ->[Manager]<-[Manager]
+    ->[Model]<-[Model]
+<- MODELS.PY
+
+-> MODELS.PY
+    ->[QuerySet]<-[QuerySet]
+    ->[Manager]<-[Manager]
+    ->[Model]<-[Model]
+<- MODELS.PY
+
+-> VIEWS.PY
+    ->[SerializedDetailView]<-[SerializedDetailView]
+    ->[SerializedListView]<-[SerializedListView]
+<- VIEWS.PY
+
+---------------------------------------------------------------------
+Starting development server at http://0.0.0.0:8000/
+[02/Apr/2019 16:03:50] "GET /json/serialized/list/ HTTP/1.1" 200 147
+---------------------------------------------------------------------
+
+->[SerializedListView].get
+
+    SerializedListView].get BEFORE qs = Update.objects.all()
+        ->[Manager].get_queryset()<-[Manager].get_queryset()
+    [SerializedListView].get AFTER qs = Update.objects.all()
+
+    [SerializedListView].get BEFORE json_data = qs.serialize()
+        ->[QuerySet].serialize()
+
+            [QuerySet].serialize() BEFORE stuct = json.loads(obj.serialize())
+                -> [Model].serialize()<- [Model].serialize()
+            [QuerySet].serialize() AFTER stuct = json.loads(obj.serialize())
+
+            [QuerySet].serialize() BEFORE stuct = json.loads(obj.serialize())
+                -> [Model].serialize()<- [Model].serialize()
+            [QuerySet].serialize() AFTER stuct = json.loads(obj.serialize())
+
+            [QuerySet].serialize() BEFORE stuct = json.loads(obj.serialize())
+                -> [Model].serialize()<- [Model].serialize()
+            [QuerySet].serialize() AFTER stuct = json.loads(obj.serialize())
+
+        <-[QuerySet].serialize()
+    [SerializedListView].get AFTER json_data = qs.serialize()
+
+<-[SerializedListView].get
+
