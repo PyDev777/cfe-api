@@ -69,8 +69,8 @@ class UpdateModelListAPIView(View):
         print('<- UpdateModelListAPIView.get')
         return HttpResponse(json_data, content_type='application/json')
 
-    def post(self, request, *args, **kwargs):
-        return HttpResponse({}, content_type='application/json')
+    # def post(self, request, *args, **kwargs):
+    #     return HttpResponse({}, content_type='application/json')
 
     print()
     print('<-- UpdateModelListAPIView')

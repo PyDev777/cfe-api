@@ -40,27 +40,34 @@ def get_list():
     return data
 
 
-# def create_update():
-#
-#     new_data = {
-#         'user': 1,
-#         'content': 'Hello, this is content!'
-#     }
-#
-#     r = requests.post(BASE_URL + ENDPOINT, data=new_data)
-#
-#     print('status_code = ', r.status_code)
-#     print("headers['content-type'] = ", r.headers['content-type'])
-#     print('encoding = ', r.encoding)
-#     # print('text = ', r.text)
-#
-#     if r.status_code == requests.codes.ok:
-#         print('r.json():', r.json())
-#         return r.json()
-#     else:
-#         print('text = ', r.text)
-#         return r.json()
+def create_update():
+    print()
+    print('--> create_update()')
+
+    new_data = {
+        'user': 1,
+        'content': 'Hello, this is content from user 1!'
+    }
+
+    r = requests.post(BASE_URL + ENDPOINT, data=new_data)
+
+    print('status_code = ', r.status_code)
+    print("headers['content-type'] = ", r.headers['content-type'])
+    print('encoding = ', r.encoding)
+    # print('text = ', r.text)
+    print()
+
+    if r.status_code == requests.codes.ok:
+        print('r.json():', r.json())
+        print()
+        print('<-- create_update()')
+        return r.json()
+    else:
+        print('text = ', r.text)
+        print()
+        print('<-- create_update()')
+        return r.text
 
 
-get_list()
-# create_update()
+# get_list()
+create_update()
