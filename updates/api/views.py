@@ -2,12 +2,16 @@ print()
 print('---> API/VIEWS.PY')
 
 
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse
 from updates.models import Update as UpdateModel
 # from .mixins import CSRFExemptMixin
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UpdateModelDetailAPIView(View):
     """
     Retrieve, Update, Delete --> Object
@@ -46,7 +50,7 @@ class UpdateModelDetailAPIView(View):
 #     def put(self, request, *args, **kwargs):
 #         return  # json
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class UpdateModelListAPIView(View):
     """
     List View
@@ -55,6 +59,11 @@ class UpdateModelListAPIView(View):
 
     print()
     print('--> UpdateModelListAPIView')
+
+    # @method_decorator(csrf_exempt)
+    # def dispatch(self, *args, **kwargs):
+    #     print('UpdateModelListAPIView.DISPATCH !!!')
+    #     return super(UpdateModelListAPIView, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         print()
@@ -69,8 +78,19 @@ class UpdateModelListAPIView(View):
         print('<- UpdateModelListAPIView.get')
         return HttpResponse(json_data, content_type='application/json')
 
-    # def post(self, request, *args, **kwargs):
-    #     return HttpResponse({}, content_type='application/json')
+    def post(self, request, *args, **kwargs):
+        print()
+        print('-> UpdateModelListAPIView.post')
+        data = json.dumps({'message': 'Unknown data'})
+        print('<- UpdateModelListAPIView.post')
+        return HttpResponse(data, content_type='application/json')
+
+    def delete(self, request, *args, **kwargs):
+        print()
+        print('-> UpdateModelListAPIView.delete')
+        data = json.dumps({'message': 'You can not delete an entire list'})
+        print('<- UpdateModelListAPIView.delete')
+        return HttpResponse(data, content_type='application/json')
 
     print()
     print('<-- UpdateModelListAPIView')

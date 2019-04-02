@@ -63,11 +63,44 @@ def create_update():
         print('<-- create_update()')
         return r.json()
     else:
-        print('text = ', r.text)
+        print('ERROR! ')
+        # print('text = ', r.text)
         print()
         print('<-- create_update()')
         return r.text
 
 
-# get_list()
+def delete_list():
+    print()
+    print('--> delete_list()')
+
+    new_data = {
+        'user': 1,
+        'content': 'Hello, this is content from user 1!'
+    }
+
+    # r = requests.delete(BASE_URL + ENDPOINT, data=new_data)
+    r = requests.delete(BASE_URL + ENDPOINT)
+
+    print('status_code = ', r.status_code)
+    print("headers['content-type'] = ", r.headers['content-type'])
+    print('encoding = ', r.encoding)
+    # print('text = ', r.text)
+    print()
+
+    if r.status_code == requests.codes.ok:
+        print('r.json():', r.json())
+        print()
+        print('<-- delete_list()')
+        return r.json()
+    else:
+        print('ERROR! ')
+        # print('text = ', r.text)
+        print()
+        print('<-- delete_list()')
+        return r.text
+
+
+get_list()
 create_update()
+delete_list()
