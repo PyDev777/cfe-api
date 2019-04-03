@@ -64,7 +64,7 @@ def create_update():
         return r.json()
     else:
         print('ERROR! ')
-        # print('text = ', r.text)
+        print('text = ', r.text)
         print()
         print('<-- create_update()')
         return r.text
@@ -95,12 +95,12 @@ def delete_list():
         return r.json()
     else:
         print('ERROR! ')
-        # print('text = ', r.text)
+        print('text = ', r.text)
         print()
         print('<-- delete_list()')
         return r.text
 
 
-get_list()
+# get_list()
 create_update()
-delete_list()
+# delete_list()

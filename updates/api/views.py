@@ -9,15 +9,18 @@ from django.views.generic import View
 from django.http import HttpResponse
 from updates.models import Update as UpdateModel
 # from .mixins import CSRFExemptMixin
+from cfeapi.mixins import HttpResponseMixin
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UpdateModelDetailAPIView(View):
+class UpdateModelDetailAPIView(HttpResponseMixin, View):
     """
     Retrieve, Update, Delete --> Object
     """
     print()
     print('--> UpdateModelDetailAPIView')
+
+    is_json = True
 
     def get(self, request, id, *args, **kwargs):
         print()
@@ -30,16 +33,23 @@ class UpdateModelDetailAPIView(View):
         json_data = obj.serialize()
         print('[UpdateModelDetailAPIView].get AFTER json_data = obj.serialize()')
         print('<- UpdateModelDetailAPIView.get')
-        return HttpResponse(json_data, content_type='application/json')
+        # return HttpResponse(json_data, content_type='application/json')
+        return self.render_to_response(json_data)
 
     def post(self, request, *args, **kwargs):
-        return HttpResponse({}, content_type='application/json')
+        # return HttpResponse({}, content_type='application/json')
+        json_data = {}
+        return self.render_to_response(json_data)
 
     def put(self, request, *args, **kwargs):
-        return HttpResponse({}, content_type='application/json')
+        # return HttpResponse({}, content_type='application/json')
+        json_data = {}
+        return self.render_to_response(json_data)
 
     def delete(self, request, *args, **kwargs):
-        return HttpResponse({}, content_type='application/json')
+        # return HttpResponse({}, content_type='application/json')
+        json_data = {}
+        return self.render_to_response(json_data, status=403)
 
     print()
     print('<-- UpdateModelDetailAPIView')
@@ -51,7 +61,7 @@ class UpdateModelDetailAPIView(View):
 #         return  # json
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UpdateModelListAPIView(View):
+class UpdateModelListAPIView(HttpResponseMixin, View):
     """
     List View
     Create View
@@ -60,10 +70,19 @@ class UpdateModelListAPIView(View):
     print()
     print('--> UpdateModelListAPIView')
 
+    is_json = True
+
     # @method_decorator(csrf_exempt)
     # def dispatch(self, *args, **kwargs):
     #     print('UpdateModelListAPIView.DISPATCH !!!')
     #     return super(UpdateModelListAPIView, self).dispatch(*args, **kwargs)
+
+    # def render_to_response(self, data, status=200):
+    #     print()
+    #     print('-> UpdateModelListAPIView.render_to_response')
+    #
+    #     print('<- UpdateModelListAPIView.render_to_response')
+    #     return HttpResponse(data, content_type='application/json', status=status)
 
     def get(self, request, *args, **kwargs):
         print()
@@ -76,21 +95,22 @@ class UpdateModelListAPIView(View):
         json_data = qs.serialize()
         print('[UpdateModelListAPIView].get AFTER json_data = obj.serialize()')
         print('<- UpdateModelListAPIView.get')
-        return HttpResponse(json_data, content_type='application/json')
+        return self.render_to_response(json_data)
 
     def post(self, request, *args, **kwargs):
         print()
         print('-> UpdateModelListAPIView.post')
         data = json.dumps({'message': 'Unknown data'})
         print('<- UpdateModelListAPIView.post')
-        return HttpResponse(data, content_type='application/json')
+        return self.render_to_response(data, status=400)
 
     def delete(self, request, *args, **kwargs):
         print()
         print('-> UpdateModelListAPIView.delete')
         data = json.dumps({'message': 'You can not delete an entire list'})
+        # status_code = 403
         print('<- UpdateModelListAPIView.delete')
-        return HttpResponse(data, content_type='application/json')
+        return self.render_to_response(data, status=403)
 
     print()
     print('<-- UpdateModelListAPIView')
