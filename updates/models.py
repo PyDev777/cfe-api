@@ -5,7 +5,7 @@ print('---> MODELS.PY')
 import json
 from django.conf import settings
 from django.db import models
-from django.core.serializers import serialize
+# from django.core.serializers import serialize
 
 
 def upload_update_image(instance, filename):
@@ -38,10 +38,21 @@ class UpdateQuerySet(models.QuerySet):
         print()
         print('-> [QuerySet].serialize()')
         # print('[QuerySet].serialize() BEFORE list_values = list(self.values("user", "content", "image", "id"))')
+
         list_values = list(self.values("user", "content", "image", "id"))
+
+        print('list_values:', list_values)
+        print('list_values TYPE is:', type(list_values))
         # print('[QuerySet].serialize() AFTER list_values = list(self.values("user", "content", "image", "id"))')
+
+        json_dumps_list_values = json.dumps(list_values)
+
+        print('json_dumps_list_values:', json_dumps_list_values)
+        print('json_dumps_list_values TYPE is:', type(json_dumps_list_values))
         print('<- [QuerySet].serialize()')
-        return json.dumps(list_values)
+        print()
+
+        return json_dumps_list_values
 
     print('<-- [QuerySet]')
 
@@ -54,9 +65,12 @@ class UpdateManager(models.Manager):
         print()
         print('-> [Manager].get_queryset()')
         # print('[Manager].get_queryset() BEFORE qs = UpdateQuerySet(self.model, using=self._db)')
+
         qs = UpdateQuerySet(self.model, using=self._db)
+
         # print('[Manager].get_queryset() AFTER qs = UpdateQuerySet(self.model, using=self._db)')
         print('<- [Manager].get_queryset()')
+
         return qs
 
     print('<-- [Manager]')
@@ -73,12 +87,15 @@ class Update(models.Model):
     image = models.ImageField(upload_to=upload_update_image, blank=True, null=True)
 
     # print('->[Model] BEFORE objects = UpdateManager()')
+
     objects = UpdateManager()
+
     # print('<-[Model] AFTER objects = UpdateManager()')
 
     def __str__(self):
         print()
         print('[Model].__str__')
+
         return self.content or ""
 
     def serialize(self):
@@ -104,9 +121,16 @@ class Update(models.Model):
             "user": self.user_id,
             "image": image
         }
-        data = json.dumps(data)
+
+        print('data:', data)
+
+        json_dumps_data = json.dumps(data)
+
+        print('json_dumps_data:', json_dumps_data)
+        print('json_dumps_data TYPE is:', type(json_dumps_data))
         print('<- [Model].serialize()')
-        return data
+
+        return json_dumps_data
 
     print('<-- [Model]')
 

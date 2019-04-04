@@ -8,7 +8,11 @@ class UpdateModelForm(forms.ModelForm):
         fields = ['user', 'content', 'image']
 
     def clean(self, *args, **kwargs):
+
         data = self.cleaned_data
+        print()
+        print('self.cleaned_data =', data)
+        print()
         content = data.get('content', None)
         image = data.get('image', None)
         if not content and not image:
