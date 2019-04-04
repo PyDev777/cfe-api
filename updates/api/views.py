@@ -6,8 +6,9 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from updates.models import Update as UpdateModel
+from updates.forms import UpdateModelForm
 # from .mixins import CSRFExemptMixin
 from cfeapi.mixins import HttpResponseMixin
 
@@ -38,8 +39,33 @@ class UpdateModelDetailAPIView(HttpResponseMixin, View):
 
     def post(self, request, *args, **kwargs):
         # return HttpResponse({}, content_type='application/json')
-        json_data = {}
-        return self.render_to_response(json_data)
+        json_data = json.dumps({"message": "Method not Allowed, please create /api/updates/ Endpoint"})
+        return self.render_to_response(json_data, status=403)
+
+    # def post(self, request, *args, **kwargs):
+    #     print()
+    #     print('-> UpdateModelDetailAPIView.post')
+    #     print('request.POST', request.POST)
+    #
+    #     print('[UpdateModelDetailAPIView].post BEFORE form = UpdateModelForm(request)')
+    #     form = UpdateModelForm(request.POST)
+    #     print('[UpdateModelDetailAPIView].post AFTER form = UpdateModelForm(request)')
+    #     if form.is_valid():
+    #         print('>[UpdateModelDetailAPIView].post.form.is_valid()')
+    #         obj = form.save(commit=True)
+    #         obj_data = obj.serialize()
+    #         print('<[UpdateModelDetailAPIView].post.form.is_valid()')
+    #         print('<- UpdateModelDetailAPIView.post')
+    #         return self.render_to_response(obj_data, status=201)
+    #     if form.errors:
+    #         print('[UpdateModelDetailAPIView].post.form.errors')
+    #         data = json.dumps(form.errors)
+    #         print('<- UpdateModelDetailAPIView.post')
+    #         return self.render_to_response(data, status=400)
+    #
+    #     data = json.dumps({'message': 'Not Allowed'})
+    #     print('<- UpdateModelDetailAPIView.post')
+    #     return self.render_to_response(data, status=406)
 
     def put(self, request, *args, **kwargs):
         # return HttpResponse({}, content_type='application/json')
@@ -100,9 +126,27 @@ class UpdateModelListAPIView(HttpResponseMixin, View):
     def post(self, request, *args, **kwargs):
         print()
         print('-> UpdateModelListAPIView.post')
-        data = json.dumps({'message': 'Unknown data'})
+        print('request.POST', request.POST)
+
+        print('[UpdateModelListAPIView].post BEFORE form = UpdateModelForm(request)')
+        form = UpdateModelForm(request.POST)
+        print('[UpdateModelListAPIView].post AFTER form = UpdateModelForm(request)')
+        if form.is_valid():
+            print('>[UpdateModelListAPIView].post.form.is_valid()')
+            obj = form.save(commit=True)
+            obj_data = obj.serialize()
+            print('<[UpdateModelListAPIView].post.form.is_valid()')
+            print('<- UpdateModelListAPIView.post')
+            return self.render_to_response(obj_data, status=201)
+        if form.errors:
+            print('[UpdateModelListAPIView].post.form.errors')
+            data = json.dumps(form.errors)
+            print('<- UpdateModelListAPIView.post')
+            return self.render_to_response(data, status=400)
+
+        data = json.dumps({'message': 'Not Allowed'})
         print('<- UpdateModelListAPIView.post')
-        return self.render_to_response(data, status=400)
+        return self.render_to_response(data, status=406)
 
     def delete(self, request, *args, **kwargs):
         print()

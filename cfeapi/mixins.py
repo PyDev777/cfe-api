@@ -6,7 +6,7 @@ class HttpResponseMixin(object):
     is_json = False
 
     def render_to_response(self, data, status=200):
-        print('-> HttpResponseMixin.render_to_response')
+        print('.. HttpResponseMixin.render_to_response ..')
         content_type = 'application/json' if self.is_json else 'text/html'
         return HttpResponse(data, content_type=content_type, status=status)
 
@@ -16,7 +16,7 @@ class HttpResponseMixin(object):
 class JsonResponseMixin(object):
 
     def render_to_json_response(self, context, **response_kwargs):
-        print('JsonResponseMixin !!!')
+        print('.. JsonResponseMixin.render_to_response ..')
         return JsonResponse(self.get_data(context), **response_kwargs)
 
     def get_data(self, context):
