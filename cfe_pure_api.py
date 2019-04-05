@@ -57,72 +57,6 @@ def get_list():
     return data
 
 
-def create_new_content():
-    print()
-    print('--> create_new_content()')
-    print()
-
-    new_data = {
-        'user': 1,
-        'content': 'New content 4',
-        'image': '',
-    }
-    print('new_data:', new_data)
-    json_dumps_new_data = json.dumps(new_data)
-    print('json_dumps_new_data: ', json_dumps_new_data)
-
-    r = requests.post(BASE_URL + ENDPOINT, data=new_data)
-    print('status_code = ', r.status_code)
-    print("headers['content-type'] = ", r.headers['content-type'])
-    print()
-
-    if r.status_code == requests.codes.ok:
-        print('Status code is: OK')
-        print('r.json():', r.json())
-        print()
-        print('<-- create_new_content()')
-        return r.json()
-    else:
-        print('Status code is non-200!)')
-        print('text = ', r.text)
-        print()
-        print('<-- create_new_content()')
-        return r.text
-
-
-def update_existing_content():
-    print()
-    print('--> update_existing_content()')
-    print()
-
-    new_data = {
-        'user': 1,
-        'content': 'Updated by new content!',
-        'image': ''
-    }
-    print('new_data:', new_data)
-    json_dumps_new_data = json.dumps(new_data)
-    print('json_dumps_new_data: ', json_dumps_new_data)
-
-    r = requests.post(BASE_URL + ENDPOINT + "1/", data=new_data)
-    print('status_code = ', r.status_code)
-    print("headers['content-type'] = ", r.headers['content-type'])
-    print()
-
-    if r.status_code == requests.codes.ok:
-        print('Status code is: OK')
-        print('r.json():', r.json())
-        print()
-        print('<-- update_existing_content()')
-        return r.json()
-    else:
-        print('Status code is non-200!)')
-        print('text = ', r.text)
-        print()
-        print('<-- update_existing_content()')
-        return r.text
-
-
 def create_update():
     print()
     print('--> create_update()')
@@ -130,25 +64,17 @@ def create_update():
 
     new_data = {
         'user': 1,
-        'content': 'Update NEW3',
-        'image': ''
+        'content': 'Update 4 from create_update()',
     }
 
-    json_dumps_new_data = json.dumps(new_data)
+    r = requests.post(BASE_URL + ENDPOINT, data=json.dumps(new_data))
 
-    print('json_dumps_new_data: ', json_dumps_new_data)
-
-    r = requests.post(BASE_URL + ENDPOINT + "1/", data=json_dumps_new_data)
-
-    # print('r.json():', r.json())
     print('status_code = ', r.status_code)
     print("headers['content-type'] = ", r.headers['content-type'])
     print('encoding = ', r.encoding)
-    # print('text = ', r.text)
     print()
 
     if r.status_code == requests.codes.ok:
-        # print('r.json():', r.json())
         print('Status code is:', r.status_code, '(OK)')
         print()
         print('<-- create_update()')
@@ -166,18 +92,11 @@ def delete_list():
     print('--> delete_list()')
     print()
 
-    # new_data = {
-    #     'user': 1,
-    #     'content': 'Hello, this is content from user 1!'
-    # }
-
-    # r = requests.delete(BASE_URL + ENDPOINT, data=new_data)
     r = requests.delete(BASE_URL + ENDPOINT)
 
     print('status_code = ', r.status_code)
     print("headers['content-type'] = ", r.headers['content-type'])
     print('encoding = ', r.encoding)
-    # print('text = ', r.text)
     print()
 
     if r.status_code == requests.codes.ok:
@@ -199,21 +118,16 @@ def do_obj_update():
     print()
 
     new_data = {
-        # 'user': 1,
-        'content': 'Update by method: PUT)',
-        # 'id': 1
+        "content": "Update by method: PUT",
     }
 
     print('new_data:', new_data)
-    # json_dumps_new_data = json.dumps(new_data)
-    # print('json_dumps_new_data: ', json_dumps_new_data)
 
-    r = requests.put(BASE_URL + ENDPOINT + "1/", data=new_data)
+    r = requests.put(BASE_URL + ENDPOINT + '1/', data=json.dumps(new_data))
 
     print('status_code = ', r.status_code)
     print("headers['content-type'] = ", r.headers['content-type'])
     # print('encoding = ', r.encoding)
-    # print('text = ', r.text)
     print()
 
     if r.status_code == requests.codes.ok:
@@ -223,7 +137,7 @@ def do_obj_update():
         print('<-- do_obj_update()')
     else:
         print('Status code is non-200!)')
-        print('text = ', r.text)
+        # print('text = ', r.text)
         print()
         print('<-- do_obj_update()')
 
@@ -235,7 +149,7 @@ def do_obj_delete():
     print('--> do_obj_delete()')
     print()
 
-    r = requests.delete(BASE_URL + ENDPOINT + "1/")
+    r = requests.delete(BASE_URL + ENDPOINT + '17/')
 
     print('status_code = ', r.status_code)
     print("headers['content-type'] = ", r.headers['content-type'])
@@ -255,11 +169,9 @@ def do_obj_delete():
     return
 
 
-get_list()
-create_new_content()
-update_existing_content()
+# # get_list()
 create_update()
-delete_list()
-do_obj_update()
-do_obj_delete()
+# # delete_list()
+# # do_obj_update()
+# # do_obj_delete()
 

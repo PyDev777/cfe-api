@@ -11,6 +11,7 @@ from updates.models import Update as UpdateModel
 from updates.forms import UpdateModelForm
 # from .mixins import CSRFExemptMixin
 from cfeapi.mixins import HttpResponseMixin
+from .utils import is_json
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -31,13 +32,13 @@ class UpdateModelDetailAPIView(HttpResponseMixin, View):
         #     obj = None
         # return obj
 
-        # qs = UpdateModel.objects.filter(id=id)
-        # if qs.count() == 1:
-        #     return qs.first()
-        # return None
+        qs = UpdateModel.objects.filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
 
-        qs = UpdateModel.objects.filter(id=id).first()
-        return qs
+        # qs = UpdateModel.objects.filter(id=id).first()
+        # return qs
 
         # obj = UpdateModel.objects.get(id=id)
         # return obj
@@ -47,9 +48,8 @@ class UpdateModelDetailAPIView(HttpResponseMixin, View):
         print('-> UpdateModelDetailAPIView.get')
         print('[UpdateModelDetailAPIView].get BEFORE obj = UpdateModel.objects.get(id=', id, ')')
 
-        # obj = UpdateModel.objects.get(id=id)
-
         obj = self.get_object(id=id)
+
         if obj is None:
             error_data = json.dumps({"message": "Update not found"})
             return self.render_to_response(error_data, status=404)
@@ -59,44 +59,47 @@ class UpdateModelDetailAPIView(HttpResponseMixin, View):
         print('[UpdateModelDetailAPIView].get BEFORE json_data = obj.serialize()')
 
         json_dumps_data = obj.serialize()
+        print('json_dumps_data TYPE is:', type(json_dumps_data))
 
         print('[UpdateModelDetailAPIView].get AFTER json_data = obj.serialize()')
         print('<- UpdateModelDetailAPIView.get')
-        # return HttpResponse(json_data, content_type='application/json')
 
         return self.render_to_response(json_dumps_data)
 
     def post(self, request, *args, **kwargs):
-        # return HttpResponse({}, content_type='application/json')
         print('request.POST:', request.POST)
-        # print('request.__dict__:', request.__dict__)
         json_data = json.dumps({"message": "Method not Allowed, please create /api/updates/ Endpoint"})
         return self.render_to_response(json_data, status=403)
 
     def put(self, request, id, *args, **kwargs):
-        # return HttpResponse({}, content_type='application/json')
         print()
         print('-> UpdateModelDetailAPIView.put')
 
         obj = self.get_object(id=id)
+
         if obj is None:
             error_data = json.dumps({"message": "Update not found"})
             return self.render_to_response(error_data, status=404)
 
-        # print('dir(request):', dir(request))
-        # print()
-        # print('request.body:', request.body)
-        # print('type(request.body):', type(request.body))
-        # new_data = json.loads(request.body)
-        # print('new_data:', new_data)
-        # print('new_data[content]:', new_data['content'])
-        # print()
+        request_body = request.body.decode()
+        print()
 
-        json_data = json.dumps({"Message": "Something on put"})
-        # json_data = {}
+        valid_json = is_json(request_body)
+        print('[UpdateModelDetailAPIView].put -> valid_json:', valid_json)
+
+        if not valid_json:
+            error_data = json.dumps({"message": "Invalid data sent, please send using JSON!"})
+            return self.render_to_response(error_data, status=400)
+
+        new_data = json.loads(request_body)
+
+        print('[UpdateModelDetailAPIView].put -> new_data[content]:', new_data['content'])
+        print()
+
+        json_dumps_data = json.dumps({"Message": "Something on put"})
 
         print('<- UpdateModelDetailAPIView.put')
-        return self.render_to_response(json_data)
+        return self.render_to_response(json_dumps_data)
 
     def delete(self, request, id, *args, **kwargs):
         print()
@@ -109,8 +112,6 @@ class UpdateModelDetailAPIView(HttpResponseMixin, View):
         if obj is None:
             error_data = json.dumps({"message": "Update not found"})
             return self.render_to_response(error_data, status=404)
-
-        # print('[UpdateModelDetailAPIView].delete obj[', obj['id'], ']:', obj['content'])
 
         json_data = json.dumps({"Message": "Something on delete"})
         print('<- UpdateModelDetailAPIView.delete')
@@ -147,33 +148,46 @@ class UpdateModelListAPIView(HttpResponseMixin, View):
     def get(self, request, *args, **kwargs):
         print()
         print('-> UpdateModelListAPIView.get')
-        print('[UpdateModelListAPIView].get BEFORE qs = UpdateModel.objects.all()')
+        # print('[UpdateModelListAPIView].get BEFORE qs = UpdateModel.objects.all()')
 
         qs = UpdateModel.objects.all()
 
-        print('[UpdateModelListAPIView].get AFTER qs = UpdateModel.objects.all()')
-        print()
-        print('[UpdateModelListAPIView].get BEFORE json_data = obj.serialize()')
+        # print('[UpdateModelListAPIView].get AFTER qs = UpdateModel.objects.all()')
+        # print()
+        # print('[UpdateModelListAPIView].get BEFORE json_data = obj.serialize()')
 
-        json_data = qs.serialize()
+        json_dumps_data = qs.serialize()
 
-        print('[UpdateModelListAPIView].get AFTER json_data = obj.serialize()')
+        # print('[UpdateModelListAPIView].get AFTER json_data = obj.serialize()')
         print('<- UpdateModelListAPIView.get')
 
-        return self.render_to_response(json_data)
+        return self.render_to_response(json_dumps_data)
 
     def post(self, request, *args, **kwargs):
         print()
         print('-> UpdateModelListAPIView.post')
-        print()
-        print('[UpdateModelListAPIView].post: request.POST =', request.POST)
+        # print()
+        # print('[UpdateModelListAPIView].post: request.POST =', request.POST)
         # print()
         # print('[UpdateModelListAPIView].post: BEFORE form = UpdateModelForm(request)')
 
-        form = UpdateModelForm(request.POST)
-        print()
-        print('[UpdateModelListAPIView].post: form =', form)
-        print()
+        request_body = request.body.decode()
+        # print('request_body:', request_body)
+        # print()
+
+        valid_json = is_json(request_body)
+        # print('[UpdateModelListAPIView].post -> valid_json:', valid_json)
+
+        if not valid_json:
+            error_data = json.dumps({"message": "Invalid data sent, please send using JSON!"})
+            return self.render_to_response(error_data, status=400)
+
+        data = json.loads(request_body)
+        form = UpdateModelForm(data)
+        # form = UpdateModelForm(request.POST)
+        # print()
+        # print('[UpdateModelListAPIView].post: form =', form)
+        # print()
 
         # print('[UpdateModelListAPIView].post: AFTER form = UpdateModelForm(request)')
 
@@ -183,7 +197,7 @@ class UpdateModelListAPIView(HttpResponseMixin, View):
 
             obj = form.save(commit=True)
             obj_data = obj.serialize()
-            print('>[UpdateModelListAPIView].post: obj_data =', obj_data)
+            # print('>[UpdateModelListAPIView].post: obj_data =', obj_data)
 
             print('<[UpdateModelListAPIView].post.form.is_valid()')
             print('<- UpdateModelListAPIView.post')
@@ -200,8 +214,8 @@ class UpdateModelListAPIView(HttpResponseMixin, View):
             return self.render_to_response(data, status=400)
 
         data = json.dumps({'message': 'Not Allowed'})
-        print('No Valid, but No Errors!')
 
+        print('------------------> Not Valid, but No Errors! <--------------------')
         print('<- UpdateModelListAPIView.post')
         return self.render_to_response(data, status=406)
 
