@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
-from .views import UpdateModelDetailAPIView, UpdateModelListAPIView
+from .views import UpdateModelListAPIView  # , UpdateModelDetailAPIView
 
 urlpatterns = [
-    url(r'^$', UpdateModelListAPIView.as_view()),  # List, Create
-    url(r'^(?P<id>\d+)/$', UpdateModelDetailAPIView.as_view()),
+    url(r'^$', UpdateModelListAPIView.as_view()),
+    # url(r'^(?P<id>\d+)/$', UpdateModelDetailAPIView.as_view()),
 ]
