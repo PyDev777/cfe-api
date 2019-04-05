@@ -122,7 +122,7 @@ def do_obj_update():
         "content": "obj Update 8 by method PUT",
     }
 
-    print('new_data:', new_data)
+    # print('new_data:', new_data)
 
     r = requests.put(BASE_URL + ENDPOINT + '1/', data=json.dumps(new_data))
 
@@ -134,14 +134,14 @@ def do_obj_update():
     if r.status_code == requests.codes.ok:
         print('Status code is: OK')
         print('r.json():', r.json())
-        print()
-        print('<-- do_obj_update()')
+
     else:
         print('Status code is non-200!)')
         print('text = ', r.text)
-        print()
-        print('<-- do_obj_update()')
 
+    print()
+    print('<-- do_obj_update()')
+    print()
     return
 
 
