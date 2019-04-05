@@ -118,7 +118,8 @@ def do_obj_update():
     print()
 
     new_data = {
-        "content": "Update by method: PUT",
+        # "content": "",
+        "content": "obj Update 8 by method PUT",
     }
 
     print('new_data:', new_data)
@@ -137,7 +138,7 @@ def do_obj_update():
         print('<-- do_obj_update()')
     else:
         print('Status code is non-200!)')
-        # print('text = ', r.text)
+        print('text = ', r.text)
         print()
         print('<-- do_obj_update()')
 
@@ -149,7 +150,7 @@ def do_obj_delete():
     print('--> do_obj_delete()')
     print()
 
-    r = requests.delete(BASE_URL + ENDPOINT + '17/')
+    r = requests.delete(BASE_URL + ENDPOINT + '19/')
 
     print('status_code = ', r.status_code)
     print("headers['content-type'] = ", r.headers['content-type'])
@@ -170,8 +171,8 @@ def do_obj_delete():
 
 
 # # get_list()
-create_update()
+# # create_update()
 # # delete_list()
-# # do_obj_update()
-# # do_obj_delete()
+# do_obj_update()
+do_obj_delete()
 
