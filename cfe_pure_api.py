@@ -26,7 +26,7 @@ def get_list(id=None):
 def create_update():
     new_data = {
         'user': 1,
-        'content': 'Update 4 from create_update()',
+        'content': ''
     }
     r = requests.post(BASE_URL + ENDPOINT, data=json.dumps(new_data))
     print('status_code = ', r.status_code)
@@ -94,7 +94,27 @@ def do_obj_delete():
     return
 
 
+# def status_create_update():
+#     new_data = {
+#         'user': 1,
+#         'content': ''
+#     }
+#     r = requests.post(BASE_URL + ENDPOINT, data=json.dumps(new_data))
+#     print('status_code = ', r.status_code)
+#     print("headers['content-type'] = ", r.headers['content-type'])
+#     print()
+#     if r.status_code == requests.codes.ok:
+#         print('Status code is:', r.status_code, '(OK)')
+#         print('r.json():', r.json())
+#         return r.json()
+#     else:
+#         print('Status code is:', r.status_code, '(NON-200!)')
+#         print('r.text = ', r.text)
+#         return r.text
+
+
 get_list()
+# get_list(1)
 # create_update()
 # delete_list()
 # do_obj_update()
