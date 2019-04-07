@@ -69,14 +69,34 @@ update_serializer.save()
 # Delete object
 # ------------------------------------------
 
-data = {'user': 1, 'content': 'Delete me'}
+data = {'user': 1, 'content': 'Delete me 3 Delete me 3 Delete me 3 Delete me 3 Delete me 3 Delete me 3 Delete me 3 Delete me 3'}
 create_obj_serializer = StatusSerializer(data=data)
 
 create_obj_serializer.is_valid()
 create_obj = create_obj_serializer.save()
-print(create_obj)
 
 obj = Status.objects.last()
 get_data_serializer = StatusSerializer(obj)
+
 print(get_data_serializer.data)
 print(obj.delete())
+
+
+# ------------------------------------------
+# Custom Serializer
+# ------------------------------------------
+
+from rest_framework import serializers
+
+
+class CustomSerializer(serializers.Serializer):
+
+    content = serializers.CharField()
+    email = serializers.EmailField()
+
+
+data = {'email': 'pydev@ukr.net', 'content': 'Hello 3 from serializers!'}
+create_obj_serializer = CustomSerializer(data=data)
+if create_obj_serializer.is_valid():
+    valid_data = create_obj_serializer.data
+    print(valid_data)
