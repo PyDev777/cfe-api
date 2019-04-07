@@ -1,27 +1,18 @@
-"""status-api URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+status-api URL Configuration
+"""
+
 from django.conf.urls import url
-from status.views import StatusListSearchAPIView, StatusCreateAPIView, StatusDetailAPIView, StatusUpdateAPIView, StatusDeleteAPIView
+# from .views import StatusListSearchAPIView
+from .views import StatusAPIView
 
 urlpatterns = [
-    url(r'^$', StatusListSearchAPIView.as_view()),
-    url(r'^create/$', StatusCreateAPIView.as_view()),
-    url(r'^(?P<id>.*)/$', StatusDetailAPIView.as_view()),
-    url(r'^(?P<id>.*)/update/$', StatusUpdateAPIView.as_view()),
-    url(r'^(?P<id>.*)/delete/$', StatusDeleteAPIView.as_view()),
+    url(r'^$', StatusAPIView.as_view()),
+    # url(r'^$', StatusListSearchAPIView.as_view()),
+    # url(r'^create/$', StatusCreateAPIView.as_view()),
+    # url(r'^(?P<id>.*)/$', StatusDetailAPIView.as_view()),
+    # url(r'^(?P<id>.*)/update/$', StatusUpdateAPIView.as_view()),
+    # url(r'^(?P<id>.*)/delete/$', StatusDeleteAPIView.as_view()),
 ]
 
 
