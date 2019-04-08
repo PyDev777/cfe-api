@@ -81,9 +81,15 @@ class StatusAPIView(mixins.CreateModelMixin,
         # print('request.body', request.body)
         if is_json(body_):
             json_data = json.loads(request.body)
-        data_passed_id = json_data.get('id', None)
 
-        passed_id = url_passed_id or data_passed_id or None
+        data_passed_id = json_data.get('id', None)
+        print('PUT: request.data =', request.data)
+        requested_id = request.data.get('id', None)
+        print('PUT: request_id =', requested_id)
+
+        passed_id = url_passed_id or data_passed_id or requested_id or None
+        print('-> PUT: passed_id =', passed_id)
+
         self.passed_id = passed_id
         return self.update(request, *args, **kwargs)
 
