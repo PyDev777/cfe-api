@@ -20,8 +20,7 @@ class StatusDetailAPIView(mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           generics.RetrieveAPIView):
 
-    permission_classes = []
-    authentication_classes = []
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
     lookup_field = 'id'
@@ -54,7 +53,7 @@ class StatusAPIView(mixins.CreateModelMixin,
                     generics.ListAPIView):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    authentication_classes = [SessionAuthentication]  # oAuth, JWT
+    # authentication_classes = [SessionAuthentication]
     serializer_class = StatusSerializer
     passed_id = None
 
