@@ -15,7 +15,9 @@ from .utils import is_json
 # UpdateModelMixin --- PUT method
 # DestroyModelMixin --- DELETE method
 
-class StatusDetailAPIView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.RetrieveAPIView):
+class StatusDetailAPIView(mixins.UpdateModelMixin,
+                          mixins.DestroyModelMixin,
+                          generics.RetrieveAPIView):
 
     permission_classes = []
     authentication_classes = []
@@ -44,7 +46,10 @@ class StatusDetailAPIView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, gen
     #     return None
 
 
-class StatusAPIView(mixins.CreateModelMixin, mixins.RetrieveModelMixin, generics.ListAPIView):
+class StatusAPIView(mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.ListAPIView):
 
     permission_classes = []
     authentication_classes = []
