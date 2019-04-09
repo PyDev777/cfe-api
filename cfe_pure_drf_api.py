@@ -3,16 +3,23 @@ import requests
 import os
 
 
-AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/'
+AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/register/'
 
 image_path = os.path.join('drf-logo.jpg')
 
 data = {
-    'username': 'dev',
-    'password': '1212qwqw'
+    # 'username': 'dev',
+    # 'username': 'pydev@ukr.net',
+    'username': 'sysadmin3',
+    'email': 'pydev@ukr.net',
+    'password': '1212qwqw',
+    'password2': '1212qwqw'
 }
 
-headers = {'content-type': 'application/json'}
+headers = {
+    'content-type': 'application/json',
+    # 'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImRldiIsImV4cCI6MTU1NDgyNTY3NiwiZW1haWwiOiIiLCJvcmlnX2lhdCI6MTU1NDgyNTM3Nn0.Xlqh5Ssw3v_cQ7HUNtxehe9ahbTQ7VWiL6msFT781d0',
+}
 # token = None
 
 r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
@@ -29,6 +36,40 @@ print('r.json():', r.json())
 # detail = r.json().get('detail', None)
 # print('Detail:', detail)
 print()
+
+
+# ---------------------------------------------------------------------------------------------
+
+# AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/'
+#
+# image_path = os.path.join('drf-logo.jpg')
+#
+# data = {
+#     # 'username': 'dev',
+#     'username': 'pydev@ukr.net',
+#     'password': '1212qwqw'
+# }
+#
+# headers = {
+#     'content-type': 'application/json',
+#     # 'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImRldiIsImV4cCI6MTU1NDgyNTY3NiwiZW1haWwiOiIiLCJvcmlnX2lhdCI6MTU1NDgyNTM3Nn0.Xlqh5Ssw3v_cQ7HUNtxehe9ahbTQ7VWiL6msFT781d0',
+# }
+# # token = None
+#
+# r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
+#
+# print()
+# print('status_code = ', r.status_code)
+# print("headers['content-type'] = ", r.headers.get('content-type', None))
+#
+# print('r.json():', r.json())
+#
+# # token = r.json().get('token', None)
+# # print('TOKEN:', token)
+# #
+# # detail = r.json().get('detail', None)
+# # print('Detail:', detail)
+# print()
 
 
 # ---------------------------------------------------------------------------------------------
