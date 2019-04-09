@@ -1,4 +1,4 @@
-"""cfeapi URL Configuration
+"""accounts api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,13 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
+from django.conf.urls import url
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token  # accounts app
+from .views import AuthView
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/auth/', include('accounts.api.urls')),
-    url(r'^api/status/', include('status.api.urls')),
-    url(r'^api/updates/', include('updates.api.urls')),
+    url(r'^$', AuthView.as_view()),
+    url(r'^jwt/$', obtain_jwt_token),
+    url(r'^jwt/refresh/$', refresh_jwt_token),
 ]
