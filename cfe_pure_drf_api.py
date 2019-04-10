@@ -10,15 +10,15 @@ image_path = os.path.join('drf-logo.jpg')
 data = {
     # 'username': 'dev',
     # 'username': 'pydev@ukr.net',
-    'username': 'sysadmin26',
-    'email': 'pydev26@ukr.net',
+    'username': 'sysadmin31',
+    'email': 'pydev31@ukr.net',
     'password': '1212qwqw',
     'password2': '1212qwqw'
 }
 
 headers = {
     'content-type': 'application/json',
-    # 'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImRldiIsImV4cCI6MTU1NDgyNTY3NiwiZW1haWwiOiIiLCJvcmlnX2lhdCI6MTU1NDgyNTM3Nn0.Xlqh5Ssw3v_cQ7HUNtxehe9ahbTQ7VWiL6msFT781d0',
+    'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiJzeXNhZG1pbjMwIiwiZXhwIjoxNTU0ODc1ODAwLCJlbWFpbCI6InB5ZGV2MzBAdWtyLm5ldCIsIm9yaWdfaWF0IjoxNTU0ODc1NTAwfQ.i1WQjnv9YODIdTWfEsPns-Bf0AY4pBcbun3JFeBcKCE',
 }
 # token = None
 
@@ -29,12 +29,13 @@ print('status_code = ', r.status_code)
 print("headers['content-type'] = ", r.headers.get('content-type', None))
 
 print('r.json():', r.json())
+print()
 
-# token = r.json().get('token', None)
-# print('TOKEN:', token)
-#
-# detail = r.json().get('detail', None)
-# print('Detail:', detail)
+token = r.json().get('token', None)
+print('TOKEN:', token)
+
+detail = r.json().get('detail', None)
+print('Detail:', detail)
 print()
 
 
