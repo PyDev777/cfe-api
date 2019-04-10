@@ -10,8 +10,8 @@ image_path = os.path.join('drf-logo.jpg')
 data = {
     # 'username': 'dev',
     # 'username': 'pydev@ukr.net',
-    'username': 'sysadmin3',
-    'email': 'pydev@ukr.net',
+    'username': 'sysadmin12',
+    'email': 'pydev2@ukr.net',
     'password': '1212qwqw',
     'password2': '1212qwqw'
 }
