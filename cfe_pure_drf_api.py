@@ -3,17 +3,12 @@ import requests
 import os
 
 
-# CREATE
-# RETRIEVE
-# UPDATE
-# DELETE
-
-
 AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/'
 
 image_path = os.path.join('drf-logo.jpg')
 
 data = {
+    # 'username': 'sysadmin30',
     'username': 'dev',
     'password': '1212qwqw',
 }
@@ -23,7 +18,7 @@ headers = {
 }
 
 print()
-print('REQUEST 1')
+print('--- REQUEST 1 ---')
 
 r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
 
@@ -31,44 +26,128 @@ print()
 print('status_code = ', r.status_code)
 print("headers['content-type'] = ", r.headers.get('content-type', None))
 
-print('r.json():', r.json())
-print()
-
-token = r.json().get('token', None)
-print('TOKEN:', token)
-
-detail = r.json().get('detail', None)
-print('Detail:', detail)
-print()
-
-
-BASE_ENDPOINT = 'http://192.168.1.5:8000/api/status/'
-ENDPOINT = 'http://192.168.1.5:8000/api/status/41/'
-
-data2 = {
-    'content': 'New PUT comment 2!',
-}
-
-headers2 = {
-    # 'content-type': 'application/json',
-    'Authorization': 'JWT ' + token,
-}
-
-
-with open(image_path, 'rb') as image:
-    file_data = {'image': image}
-
+if r.status_code == requests.codes.ok:
+    print('Status code is:', r.status_code, '(OK)')
+    print('r.json():', r.json())
+    token = r.json().get('token', None)
+    # print('TOKEN:', token)
     print()
-    print('REQUEST 2')
-    r2 = requests.put(ENDPOINT, data=data2, files=file_data, headers=headers2)
-    # r2 = requests.post(BASE_ENDPOINT, data=data2, files=file_data, headers=headers2)
-    print('status_code = ', r2.status_code)
-    print("headers['content-type'] = ", r2.headers.get('content-type', None))
+
+    if token:
+        BASE_ENDPOINT = 'http://192.168.1.5:8000/api/status/'
+        ENDPOINT = BASE_ENDPOINT + '41/'
+
+        data2 = {
+            # 'content': 'New comment from sysadmin30!',
+            'content': 'New comment from dev!',
+        }
+
+        headers2 = {
+            # 'content-type': 'application/json',
+            'Authorization': 'JWT ' + token,
+        }
+
+        # CREATE
+        # RETRIEVE
+        # UPDATE
+        # DELETE
+
+        with open(image_path, 'rb') as image:
+            file_data = {'image': image}
+
+            print()
+            print('--- REQUEST 2 ---')
+            r2 = requests.get(ENDPOINT, headers=headers2)
+            # r2 = requests.put(ENDPOINT, data=data2, files=file_data, headers=headers2)
+            # r2 = requests.post(BASE_ENDPOINT, data=data2, files=file_data, headers=headers2)
+            print()
+            print('status_code = ', r2.status_code)
+            print("headers['content-type'] = ", r2.headers.get('content-type', None))
+            print()
+            print('r2.json():', r2.json())
+            print()
+
+    else:
+        print()
+        print('TOKEN is None!')
+        print()
+
+else:
+    print('Status code is:', r.status_code, '(NON-200!)')
+    detail = r.json().get('detail', None)
+    print('Detail:', detail)
     print()
-    print('r2.json():', r2.json())
+    print('r.text = ', r.text)
     print()
-    print('r2.text = ', r2.text)
-    print()
+
+
+
+
+
+
+# ---------------------------------------------------------------------------------------------
+
+
+# AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/'
+#
+# image_path = os.path.join('drf-logo.jpg')
+#
+# data = {
+#     'username': 'dev',
+#     'password': '1212qwqw',
+# }
+#
+# headers = {
+#     'content-type': 'application/json',
+# }
+#
+# print()
+# print('REQUEST 1')
+#
+# r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
+#
+# print()
+# print('status_code = ', r.status_code)
+# print("headers['content-type'] = ", r.headers.get('content-type', None))
+#
+# print('r.json():', r.json())
+# print()
+#
+# token = r.json().get('token', None)
+# print('TOKEN:', token)
+#
+# detail = r.json().get('detail', None)
+# print('Detail:', detail)
+# print()
+#
+#
+# BASE_ENDPOINT = 'http://192.168.1.5:8000/api/status/'
+# ENDPOINT = 'http://192.168.1.5:8000/api/status/41/'
+#
+# data2 = {
+#     'content': 'New PUT comment 2!',
+# }
+#
+# headers2 = {
+#     # 'content-type': 'application/json',
+#     'Authorization': 'JWT ' + token,
+# }
+#
+#
+# with open(image_path, 'rb') as image:
+#     file_data = {'image': image}
+#
+#     print()
+#     print('REQUEST 2')
+#     r2 = requests.put(ENDPOINT, data=data2, files=file_data, headers=headers2)
+#     # r2 = requests.post(BASE_ENDPOINT, data=data2, files=file_data, headers=headers2)
+#     print('status_code = ', r2.status_code)
+#     print("headers['content-type'] = ", r2.headers.get('content-type', None))
+#     print()
+#     print('r2.json():', r2.json())
+#     print()
+#     print('r2.text = ', r2.text)
+#     print()
 
 
 # ---------------------------------------------------------------------------------------------
