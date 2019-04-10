@@ -1,15 +1,14 @@
 import json
 from rest_framework import generics, mixins, permissions
 from rest_framework.authentication import SessionAuthentication
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from django.views.generic import View
 
 from status.models import Status
 from .serializers import StatusSerializer
 from django.shortcuts import get_object_or_404
 
 from .utils import is_json
+
+from accounts.api.permissions import IsOwnerOrReadOnly
 
 
 # CreateModelMixin --- POST method
@@ -20,7 +19,7 @@ class StatusDetailAPIView(mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           generics.RetrieveAPIView):
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
     lookup_field = 'id'

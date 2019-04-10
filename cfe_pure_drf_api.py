@@ -3,24 +3,27 @@ import requests
 import os
 
 
-AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/register/'
+# CREATE
+# RETRIEVE
+# UPDATE
+# DELETE
+
+
+AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/'
 
 image_path = os.path.join('drf-logo.jpg')
 
 data = {
-    # 'username': 'dev',
-    # 'username': 'pydev@ukr.net',
-    'username': 'sysadmin31',
-    'email': 'pydev31@ukr.net',
+    'username': 'dev',
     'password': '1212qwqw',
-    'password2': '1212qwqw'
 }
 
 headers = {
     'content-type': 'application/json',
-    'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiJzeXNhZG1pbjMwIiwiZXhwIjoxNTU0ODc1ODAwLCJlbWFpbCI6InB5ZGV2MzBAdWtyLm5ldCIsIm9yaWdfaWF0IjoxNTU0ODc1NTAwfQ.i1WQjnv9YODIdTWfEsPns-Bf0AY4pBcbun3JFeBcKCE',
 }
-# token = None
+
+print()
+print('REQUEST 1')
 
 r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
 
@@ -37,6 +40,73 @@ print('TOKEN:', token)
 detail = r.json().get('detail', None)
 print('Detail:', detail)
 print()
+
+
+BASE_ENDPOINT = 'http://192.168.1.5:8000/api/status/'
+ENDPOINT = 'http://192.168.1.5:8000/api/status/41/'
+
+data2 = {
+    'content': 'New PUT comment 2!',
+}
+
+headers2 = {
+    # 'content-type': 'application/json',
+    'Authorization': 'JWT ' + token,
+}
+
+
+with open(image_path, 'rb') as image:
+    file_data = {'image': image}
+
+    print()
+    print('REQUEST 2')
+    r2 = requests.put(ENDPOINT, data=data2, files=file_data, headers=headers2)
+    # r2 = requests.post(BASE_ENDPOINT, data=data2, files=file_data, headers=headers2)
+    print('status_code = ', r2.status_code)
+    print("headers['content-type'] = ", r2.headers.get('content-type', None))
+    print()
+    print('r2.json():', r2.json())
+    print()
+    print('r2.text = ', r2.text)
+    print()
+
+
+# ---------------------------------------------------------------------------------------------
+
+# AUTH_ENDPOINT = 'http://192.168.1.5:8000/api/auth/register/'
+#
+# image_path = os.path.join('drf-logo.jpg')
+#
+# data = {
+#     # 'username': 'dev',
+#     # 'username': 'pydev@ukr.net',
+#     'username': 'sysadmin31',
+#     'email': 'pydev31@ukr.net',
+#     'password': '1212qwqw',
+#     'password2': '1212qwqw'
+# }
+#
+# headers = {
+#     'content-type': 'application/json',
+#     'Authorization': 'JWT ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiJzeXNhZG1pbjMwIiwiZXhwIjoxNTU0ODc1ODAwLCJlbWFpbCI6InB5ZGV2MzBAdWtyLm5ldCIsIm9yaWdfaWF0IjoxNTU0ODc1NTAwfQ.i1WQjnv9YODIdTWfEsPns-Bf0AY4pBcbun3JFeBcKCE',
+# }
+# # token = None
+#
+# r = requests.post(AUTH_ENDPOINT, data=json.dumps(data), headers=headers)
+#
+# print()
+# print('status_code = ', r.status_code)
+# print("headers['content-type'] = ", r.headers.get('content-type', None))
+#
+# print('r.json():', r.json())
+# print()
+#
+# token = r.json().get('token', None)
+# print('TOKEN:', token)
+#
+# detail = r.json().get('detail', None)
+# print('Detail:', detail)
+# print()
 
 
 # ---------------------------------------------------------------------------------------------
