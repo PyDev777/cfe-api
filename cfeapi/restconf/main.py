@@ -10,6 +10,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
+    'DEFAULT_PAGINATION_CLASSES': 'cfeapi.restconf.pagination.CFEAPIPagination',  # 'rest_framework.pagination.PageNumberPagination',
 }
 
 
