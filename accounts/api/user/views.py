@@ -24,7 +24,7 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 class UserStatusAPIView(generics.ListAPIView):
 
     serializer_class = StatusInLineUserSerializer
-    pagination_class = CFEAPIPagination
+    # pagination_class = CFEAPIPagination
 
     def get_queryset(self, *args, **kwargs):
         username = self.kwargs.get('username', None)
