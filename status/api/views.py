@@ -47,24 +47,25 @@ class StatusDetailAPIView(mixins.UpdateModelMixin,
 
 # Login required mixin / decorator
 class StatusAPIView(mixins.CreateModelMixin,
-                    # mixins.UpdateModelMixin,
-                    # mixins.DestroyModelMixin,
                     generics.ListAPIView):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     # authentication_classes = [SessionAuthentication]
     serializer_class = StatusSerializer
     passed_id = None
+    search_fields = ('user__username', 'content')
+    ordering_fields = ('user__username', 'created_at', 'id')
+    queryset = Status.objects.all()
 
-    def get_queryset(self):
-        request = self.request
-        # print('request.user: ', request.user)
-
-        qs = Status.objects.all()
-        query = self.request.GET.get('q')
-        if query is not None:
-            qs = qs.filter(content__icontains=query)
-        return qs
+    # def get_queryset(self):
+    #     request = self.request
+    #     # print('request.user: ', request.user)
+    #
+    #     qs = Status.objects.all()
+    #     query = self.request.GET.get('q')
+    #     if query is not None:
+    #         qs = qs.filter(content__icontains=query)
+    #     return qs
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
