@@ -43,7 +43,8 @@ class StatusSerializer(serializers.ModelSerializer):
     #     return UserPublicSerializer(user, read_only=True, context={'request': request}).data
 
     def validate_content(self, value):
-        if len(value) > 100:
+
+        if value is not None and len(value) > 100:
             raise serializers.ValidationError('StatusSerializer: Content is too long!')
         return value
 
