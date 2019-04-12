@@ -14,11 +14,21 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     uri = serializers.SerializerMethodField(read_only=True)
     status = serializers.SerializerMethodField(read_only=True)
+    # statuses = serializers.HyperlinkedRelatedField(
+    #     source='status_set',  # Status.objects.filter(user=user)
+    #     # queryset=Status.objects.all()[:8],
+    #     many=True,
+    #     lookup_field='id',
+    #     view_name='api-status:detail',
+    #     read_only=True,
+    # )
+    # statuses = StatusInLineUserSerializer(source='status_set', many=True, read_only=True)
 
     class Meta:
         model = User
         fields = [
             'id',
+            # 'statuses',
             'username',
             'uri',
             'status',
