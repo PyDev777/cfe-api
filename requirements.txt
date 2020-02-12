@@ -1,4 +1,4 @@
-Django==1.11.20
+Django==1.11.28
 Pillow==5.4.1
 djangorestframework==3.9.2
 django-filter==2.1.0
